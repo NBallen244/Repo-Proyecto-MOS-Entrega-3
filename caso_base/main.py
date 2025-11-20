@@ -1,5 +1,6 @@
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
+import pandas as pd
 
 import sys
 import os
@@ -60,8 +61,6 @@ def construccion_modelo(clientes, depositos, parametros, vehiculos):
     model.gas_cost=Param(initialize=parametros.loc[parametros['Parameter'] == 'fuel_price', 'Value'].values[0])
     #Rendimiento gasolina (km/galon)
     model.gas_eff=Param(initialize=parametros.loc[parametros['Parameter'] == 'fuel_efficiency_typical', 'Value'].values[0])
-    #Velocidad promedio (km/h)
-    model.avg_speed=Param(initialize=80) # Valor supuesto
     
     #Variables de decisión
     model.x = Var(model.N, model.N, model.V, domain=Binary)  # 1 si el vehículo v va de i a j
@@ -124,15 +123,75 @@ if __name__ == "__main__":
         print(i, model.dist[i])
     # Crear el solucionador
     solver = SolverFactory('appsi_highs')  # Asegúrate de tener SCIP instalado
+    solver.options['TimeLimit'] = 10
     # Resolver el modelo
     start_time = time.time()
     results = solver.solve(model, tee=True)
     end_time = time.time()
-    print(f"Tiempo de resolución: {end_time - start_time} segundos")
-    print("Estado de la solución:", results.solver.status)
-    print("Condición de la solución:", results.solver.termination_condition)
-    print("Valor de la función objetivo:", value(model.OBJ))
     
+    #diccionario resultados
+    resultados = {
+        "VehicleId": [],
+        "LoadCap": [],
+        "FuelCap": [],
+        "RouteSequence": [],
+        "Municipalities": [],
+        "DemandSatisfied": [],
+        "InitialLoad": [],
+        "InitialFuel": [],
+        "Distance": [],
+        "Time": [],
+        "TotalCost": []
+    }
+    
+    #Contruccion archivo de verificacion de resultados
+    for vehicleid in model.V:
+        ruta = []
+        #solo hay 1 centro de distribucion
+        for deposit in model.D:
+            ruta.append([deposit, 0])
+        municipios = 0
+        demanda_satisfecha = 0
+        distancia_recorrida = 0
+        #revisamos todos los clientes
+        for i in model.C:
+            #si pasa por el cliente (tiene un valor en el orden de su ruta mayor a 0)
+            if model.y[i,vehicleid].value is not None and model.y[i,vehicleid].value > 0:
+                #se agrega a la ruta, asi como su municipio y demanda
+                ruta.append([i, int(model.y[i,vehicleid].value)])
+                municipios += 1
+                demanda_satisfecha += value(model.demand[i])
+        #ordenar en base a y (orden de ruta)     
+        ruta = sorted(ruta, key=lambda x: x[1])
+        ruta = [node[0] for node in ruta]
+        #agregamos el deposito al final de la ruta 
+        ruta.append(ruta[0])
+        #calculamos la distancia de la ruta
+        if len(ruta)>2:
+            inicio=ruta[0]
+            for nodo in ruta[1:]:
+                next=nodo
+                distancia_recorrida+=value(model.dist[inicio, next])
+                inicio=next
+        texto_ruta="-".join(ruta)
+        resultados["VehicleId"].append(vehicleid)
+        resultados["LoadCap"].append(value(model.cap[vehicleid]))
+        resultados["FuelCap"].append(value(model.aut[vehicleid]) / value(model.gas_eff))
+        resultados["RouteSequence"].append(texto_ruta)
+        resultados["Municipalities"].append(municipios)
+        resultados["DemandSatisfied"].append(demanda_satisfecha)
+        resultados["InitialLoad"].append(demanda_satisfecha)  # Asumiendo carga inicial igual a demanda satisfecha
+        resultados["InitialFuel"].append(distancia_recorrida / value(model.gas_eff))  # Asumiendo tanque lleno
+        resultados["Distance"].append(distancia_recorrida)
+        resultados["Time"].append((distancia_recorrida/80)*60) #asumiendo velocidd de 80 km/h y tiempo en minutos
+        total_cost = distancia_recorrida * (value(model.gas_cost) / value(model.gas_eff))
+        resultados["TotalCost"].append(total_cost)
+        
+    #guardar dataframe
+    data_frame=pd.DataFrame(resultados)
+    #export csv
+    data_frame.to_csv('verificacion_caso1.csv', sep=',', index=False)
+        
     
 
     

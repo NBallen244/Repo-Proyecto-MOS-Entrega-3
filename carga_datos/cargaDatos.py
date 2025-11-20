@@ -35,6 +35,7 @@ def cargar_datos_caso2():
 def cargar_datos_caso3():
     # Cargar el archivo clients.csv
     clientes= pd.read_csv(ruta_archivos_caso3+"clients.csv", sep=",", encoding="latin1")
+    clientes['MaxWeight'] = clientes['MaxWeight'].fillna(52)  # Limite legal maximo
     # Cargar el archivo depots.csv
     depositos= pd.read_csv(ruta_archivos_caso3 +"depots.csv", sep=",", encoding="latin1")
     # Cargar el archivo parameters_base.csv
@@ -46,3 +47,5 @@ def cargar_datos_caso3():
     # Cargar peajes
     peajes= pd.read_csv(ruta_archivos_caso3+"tolls.csv", sep=",", encoding="latin1")
     return clientes, depositos, parametros, vehiculos, estaciones, peajes
+
+print(cargar_datos_caso3()[4])
