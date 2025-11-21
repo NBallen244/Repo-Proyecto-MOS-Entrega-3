@@ -14,4 +14,5 @@ if __name__ == "__main__":
     # Cargar los datos
     clientes, depositos, parametros, vehiculos, estaciones, peajes = cargar_datos()
 
-    
+
+

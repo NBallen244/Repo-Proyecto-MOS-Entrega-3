@@ -11,7 +11,6 @@ script_dir = os.path.dirname(os.path.abspath("cargaDatos.py"))
 sys.path.insert(0, script_dir)
 
 from carga_datos.cargaDatos import cargar_datos_base as cargar_datos
-from herramientas_compartidas.distancia_haversine import haversine
 
 def construccion_modelo(clientes, depositos, parametros, vehiculos):
     # Aquí iría la construcción del modelo de optimización usando Pyomo
@@ -28,29 +27,40 @@ def construccion_modelo(clientes, depositos, parametros, vehiculos):
     model.N = model.C | model.D
     
     # Definición de parámetros
-    #distancias entre nodos
+    #distancias y tiempos entre nodos
     distancia_dict = {}
+    #tiempos entre nodos
+    tiempo_dict = {}
     #primero de los centros de distribucion a todos los clientes
+    matriz_distancia_tiempo = pd.read_csv("caso_base/matriz.csv")
     for i in model.D:
-        dlongitud= depositos.loc[depositos['StandardizedID'] == i, 'Longitude'].values[0]
-        dlatitud= depositos.loc[depositos['StandardizedID'] == i, 'Latitude'].values[0]
         for j in model.C:
-            clongitud= clientes.loc[clientes['StandardizedID'] == j, 'Longitude'].values[0]
-            clatitud= clientes.loc[clientes['StandardizedID'] == j, 'Latitude'].values[0]
-            distancia = haversine(dlatitud, dlongitud, clatitud, clongitud)
+            distancia = matriz_distancia_tiempo.loc[
+                (matriz_distancia_tiempo['FromID'] == i) & (matriz_distancia_tiempo['ToID'] == j),
+                'Distance_km'
+            ].values[0]
+            duracion = matriz_distancia_tiempo.loc[
+                (matriz_distancia_tiempo['FromID'] == i) & (matriz_distancia_tiempo['ToID'] == j),
+                'Time_min'
+            ].values[0]
             distancia_dict[(i,j)] = distancia
-            distancia_dict[(j,i)] = distancia # Asumiendo simetría
+            tiempo_dict[(i,j)] = duracion
     #luego entre clientes
     for i in model.C:
-        clongitud_i= clientes.loc[clientes['StandardizedID'] == i, 'Longitude'].values[0]
-        clatitud_i= clientes.loc[clientes['StandardizedID'] == i, 'Latitude'].values[0]
         for j in model.C:
             if i != j:
-                clongitud_j= clientes.loc[clientes['StandardizedID'] == j, 'Longitude'].values[0]
-                clatitud_j= clientes.loc[clientes['StandardizedID'] == j, 'Latitude'].values[0]
-                distancia = haversine(clatitud_i, clongitud_i, clatitud_j, clongitud_j)
+                distancia = matriz_distancia_tiempo.loc[
+                    (matriz_distancia_tiempo['FromID'] == i) & (matriz_distancia_tiempo['ToID'] == j),
+                    'Distance_km'
+                ].values[0]
+                duracion = matriz_distancia_tiempo.loc[
+                    (matriz_distancia_tiempo['FromID'] == i) & (matriz_distancia_tiempo['ToID'] == j),
+                    'Time_min'
+                ].values[0]
                 distancia_dict[(i,j)] = distancia
+                tiempo_dict[(i,j)] = duracion
     model.dist=Param(model.N, model.N, initialize=distancia_dict, default=0)
+    model.tiempo=Param(model.N, model.N, initialize=tiempo_dict, default=0)
     #Demandas de clientes (kg)
     model.demand=Param(model.C, initialize=clientes.set_index('StandardizedID')['Demand'].to_dict())
     #Capacidad de los vehículos (kg)
@@ -63,7 +73,9 @@ def construccion_modelo(clientes, depositos, parametros, vehiculos):
     model.gas_eff=Param(initialize=parametros.loc[parametros['Parameter'] == 'fuel_efficiency_typical', 'Value'].values[0])
     
     #Variables de decisión
-    model.x = Var(model.N, model.N, model.V, domain=Binary)  # 1 si el vehículo v va de i a j
+    #evitar variables innecesarias (i != j)
+    valid_arcs = [(i, j, v) for i in model.N for j in model.N for v in model.V if i != j]
+    model.x = Var(valid_arcs, domain=Binary)  # 1 si el vehículo v va de i a j
     model.y = Var(model.N, model.V, domain=NonNegativeIntegers)  # entero que representa el orden en el que el vehiculo visita el nodo
     #funcion objetivo
     def obj_rule(model):
@@ -111,7 +123,7 @@ def construccion_modelo(clientes, depositos, parametros, vehiculos):
         return sum(model.demand[c] * model.x[i,c,v] for c in model.C for i in model.N if i != c) <= model.cap[v]
     model.capacidad_vehiculo = Constraint(model.V, rule=capacidad_vehiculo_rule)
     #Dominio de variables ya definido en la declaración
-    
+    print("Modelo construido exitosamente.")
     return model
 
 if __name__ == "__main__":
@@ -119,15 +131,16 @@ if __name__ == "__main__":
     clientes, depositos, parametros, vehiculos = cargar_datos()
     # Construir el modelo
     model = construccion_modelo(clientes, depositos, parametros, vehiculos)
-    for i in model.dist:
-        print(i, model.dist[i])
     # Crear el solucionador
     solver = SolverFactory('appsi_highs')  # Asegúrate de tener SCIP instalado
-    solver.options['TimeLimit'] = 10
+    solver.options['time_limit'] = 60
+    
     # Resolver el modelo
     start_time = time.time()
     results = solver.solve(model, tee=True)
     end_time = time.time()
+    
+    print(f"Tiempo de resolución: {end_time - start_time} segundos")
     
     #diccionario resultados
     resultados = {
@@ -151,8 +164,11 @@ if __name__ == "__main__":
         for deposit in model.D:
             ruta.append([deposit, 0])
         municipios = 0
-        demanda_satisfecha = 0
+        demandas_satisfecha = []
+        demanda_total=0
+        
         distancia_recorrida = 0
+        tiempo_total=0
         #revisamos todos los clientes
         for i in model.C:
             #si pasa por el cliente (tiene un valor en el orden de su ruta mayor a 0)
@@ -160,7 +176,8 @@ if __name__ == "__main__":
                 #se agrega a la ruta, asi como su municipio y demanda
                 ruta.append([i, int(model.y[i,vehicleid].value)])
                 municipios += 1
-                demanda_satisfecha += value(model.demand[i])
+                demandas_satisfecha.append(str(value(model.demand[i])))
+                demanda_total += value(model.demand[i])
         #ordenar en base a y (orden de ruta)     
         ruta = sorted(ruta, key=lambda x: x[1])
         ruta = [node[0] for node in ruta]
@@ -171,7 +188,11 @@ if __name__ == "__main__":
             inicio=ruta[0]
             for nodo in ruta[1:]:
                 next=nodo
-                distancia_recorrida+=value(model.dist[inicio, next])
+                #solo sumamos si no es el mismo nodo, pues la distancia/tiempo sería 0
+                if inicio != next:
+                    distancia_recorrida+=value(model.dist[inicio, next])
+                    tiempo_total += value(model.tiempo[inicio, next])
+                        
                 inicio=next
         texto_ruta="-".join(ruta)
         resultados["VehicleId"].append(vehicleid)
@@ -179,18 +200,18 @@ if __name__ == "__main__":
         resultados["FuelCap"].append(value(model.aut[vehicleid]) / value(model.gas_eff))
         resultados["RouteSequence"].append(texto_ruta)
         resultados["Municipalities"].append(municipios)
-        resultados["DemandSatisfied"].append(demanda_satisfecha)
-        resultados["InitialLoad"].append(demanda_satisfecha)  # Asumiendo carga inicial igual a demanda satisfecha
+        resultados["DemandSatisfied"].append("-".join(demandas_satisfecha))
+        resultados["InitialLoad"].append(demanda_total)  # Asumiendo carga inicial igual a demanda satisfecha
         resultados["InitialFuel"].append(distancia_recorrida / value(model.gas_eff))  # Asumiendo tanque lleno
         resultados["Distance"].append(distancia_recorrida)
-        resultados["Time"].append((distancia_recorrida/80)*60) #asumiendo velocidd de 80 km/h y tiempo en minutos
+        resultados["Time"].append(tiempo_total) 
         total_cost = distancia_recorrida * (value(model.gas_cost) / value(model.gas_eff))
         resultados["TotalCost"].append(total_cost)
         
     #guardar dataframe
     data_frame=pd.DataFrame(resultados)
     #export csv
-    data_frame.to_csv('verificacion_caso1.csv', sep=',', index=False)
+    data_frame.to_csv('caso_base/verificacion_caso1.csv', sep=',', index=False)
         
     
 

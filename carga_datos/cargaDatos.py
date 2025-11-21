@@ -48,4 +48,3 @@ def cargar_datos_caso3():
     peajes= pd.read_csv(ruta_archivos_caso3+"tolls.csv", sep=",", encoding="latin1")
     return clientes, depositos, parametros, vehiculos, estaciones, peajes
 
-print(cargar_datos_caso3()[4])
