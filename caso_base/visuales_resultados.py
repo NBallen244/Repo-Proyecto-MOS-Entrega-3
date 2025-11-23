@@ -43,6 +43,7 @@ def comparacion_cargas():
     carga_total=datos['DemandSatisfied'].str.split("-").apply(lambda x: sum(map(float, x)))
     plt.plot(datos['VehicleId'], carga_total, marker='o', label='Carga Entregada (kg)')
     plt.plot(datos['VehicleId'], datos['LoadCap'], marker='s', label='Capacidad del Vehículo (kg)')
+    plt.bar(datos['VehicleId'], carga_total/datos['LoadCap'], alpha=0.2, color='green')
     plt.xlabel('ID del Vehículo')
     plt.ylabel('Carga (kg)')
     plt.title('Comparación de Carga Entregada vs Capacidad del Vehículo')
