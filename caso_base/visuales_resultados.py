@@ -39,13 +39,18 @@ def generacion_mapa():
     
 def comparacion_cargas():
     datos=pd.read_csv("caso_base/verificacion_caso1.csv", sep=",", encoding="utf-8")
+    datos['DemandSatisfied'] = datos['DemandSatisfied'].fillna('0-0')
+    demandas = datos['DemandSatisfied'].str.split("-").tolist()
+    cargas_totales = [sum(float(demand) for demand in demanda) for demanda in demandas]
+    desperdicio = datos['LoadCap'] - pd.Series(cargas_totales)
+    porcentaje_desperdicio = (desperdicio / datos['LoadCap']) * 100
+    
     plt.figure(figsize=(10,6))
-    carga_total=datos['DemandSatisfied'].str.split("-").apply(lambda x: sum(map(float, x)))
-    plt.plot(datos['VehicleId'], carga_total, marker='o', label='Carga Entregada (kg)')
+    plt.plot(datos['VehicleId'], cargas_totales, marker='o', label='Carga Entregada (kg)')
     plt.plot(datos['VehicleId'], datos['LoadCap'], marker='s', label='Capacidad del Vehículo (kg)')
-    plt.bar(datos['VehicleId'], carga_total/datos['LoadCap'], alpha=0.2, color='green')
+    plt.bar(datos['VehicleId'], porcentaje_desperdicio, alpha=0.2, color='red', label='Porcentaje de desperdicio (%)')
     plt.xlabel('ID del Vehículo')
-    plt.ylabel('Carga (kg)')
+    plt.ylabel('Carga (kg)/Porcentaje (%)')
     plt.title('Comparación de Carga Entregada vs Capacidad del Vehículo')
     plt.xticks(rotation=45)
     plt.legend()
@@ -56,6 +61,7 @@ def comparacion_cargas():
 def comparacion_porcentual():
     datos=pd.read_csv("caso_base/verificacion_caso1.csv", sep=",", encoding="utf-8")
     plt.figure(figsize=(10,6))
+    datos['DemandSatisfied'] = datos['DemandSatisfied'].fillna('0-0')
     carga_total=datos['DemandSatisfied'].str.split("-").apply(lambda x: sum(map(float, x)))
     plt.pie(carga_total, labels=datos['VehicleId'], autopct='%1.1f%%', startangle=140)
     plt.title('Distribución de Carga Entregada por Vehículo')
