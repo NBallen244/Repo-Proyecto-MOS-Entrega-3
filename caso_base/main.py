@@ -176,14 +176,16 @@ if __name__ == "__main__":
                 #se agrega a la ruta, asi como su municipio y demanda
                 ruta.append([i, int(model.y[i,vehicleid].value)])
                 municipios += 1
-                demandas_satisfecha.append(str(value(model.demand[i])))
+                demandas_satisfecha.append((str(value(model.demand[i])), int(model.y[i,vehicleid].value)))
                 demanda_total += value(model.demand[i])
-        if len(demandas_satisfecha) == 0:
-            demandas_satisfecha.append('0')
         #ordenar en base a y (orden de ruta)     
         ruta = sorted(ruta, key=lambda x: x[1])
+        demandas_satisfecha = sorted(demandas_satisfecha, key=lambda x: x[1])
+        demandas_satisfecha = [d[0] for d in demandas_satisfecha]
+        if len(demandas_satisfecha) == 0:
+            demandas_satisfecha.append('0')
         ruta = [node[0] for node in ruta]
-        #agregamos el deposito al final de la ruta 
+        #agregamos el deposito al final de la ruta
         ruta.append(ruta[0])
         #calculamos la distancia de la ruta
         if len(ruta)>2:
