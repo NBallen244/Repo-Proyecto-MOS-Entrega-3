@@ -8,7 +8,7 @@ from folium.plugins import MarkerCluster
 script_dir = os.path.dirname(os.path.abspath("cargaDatos.py"))
 sys.path.insert(0, script_dir)
 
-from carga_datos.cargaDatos import cargar_datos_base
+from carga_datos.cargaDatos import cargar_datos_base, cargar_datos_caso2, cargar_datos_caso3
 colors = ['blue', 'green', 'purple', 'orange', 'darkred', 'lightred', 'beige', 'darkblue', 'darkgreen', 'cadetblue', 'darkpurple', 'white', 'pink', 'lightblue', 'lightgreen', 'gray', 'black', 'lightgray']
 
 #archivos verificacion pyomo
@@ -21,12 +21,12 @@ ruta_ver_ga_base = "metaheuristica/caso_base/verificacion_metaheuristica_GA_caso
 ruta_ver_ga_caso2 = "metaheuristica/caso_2/verificacion_metaheuristica_GA_A_caso2.csv"
 ruta_ver_ga_caso3 = "metaheuristica/caso_3/verificacion_metaheuristica_GA_A_caso3.csv"
 
-def generacion_mapa(ruta_archivo, ruta_salida):
+def generacion_mapa(ruta_archivo, ruta_salida, detalles):
     coordenadas_colombia = [4.5709, -74.2973]
     mapa = fo.Map(location=coordenadas_colombia, zoom_start=10)
     datos=pd.read_csv(ruta_archivo, sep=",", encoding="utf-8")
-    detalles=cargar_datos_base()
     clientes=detalles[0]
+    print(clientes)
     depositos=detalles[1]
     marker_cluster = MarkerCluster().add_to(mapa)
     for index, fila in datos.iterrows():
@@ -38,6 +38,7 @@ def generacion_mapa(ruta_archivo, ruta_salida):
             if "D" in nodo:
                 info_nodo=depositos.loc[depositos['StandardizedID'] == nodo].iloc[0]
             else:
+                print(nodo)
                 info_nodo=clientes.loc[clientes['StandardizedID'] == nodo].iloc[0]
             marker_color=color
             location=[info_nodo['Latitude'], info_nodo['Longitude']]
@@ -90,21 +91,27 @@ if __name__ == "__main__":
     if opcion_archivo == '1':
         ruta_archivo = ruta_ver_pyomo_base
         ruta_salida = "pyomo/caso_base/mapa_rutas.html"
+        detalles = cargar_datos_base()
     elif opcion_archivo == '2':
         ruta_archivo = ruta_ver_pyomo_caso2
         ruta_salida = "pyomo/caso_2/mapa_rutas.html"
+        detalles = cargar_datos_caso2()
     elif opcion_archivo == '3':
         ruta_archivo = ruta_ver_pyomo_caso3
         ruta_salida = "pyomo/caso_3/mapa_rutas.html"
+        detalles = cargar_datos_caso3()
     elif opcion_archivo == '4':
         ruta_archivo = ruta_ver_ga_base
         ruta_salida = "metaheuristica/caso_base/mapa_rutas.html"
+        detalles = cargar_datos_base()
     elif opcion_archivo == '5':
         ruta_archivo = ruta_ver_ga_caso2
         ruta_salida = "metaheuristica/caso_2/mapa_rutas.html"
+        detalles = cargar_datos_caso2()
     elif opcion_archivo == '6':
         ruta_archivo = ruta_ver_ga_caso3
         ruta_salida = "metaheuristica/caso_3/mapa_rutas.html"
+        detalles = cargar_datos_caso3()
     else:
         print("Opción no válida. Saliendo del programa.")
         sys.exit(1)
@@ -116,7 +123,7 @@ if __name__ == "__main__":
         print("4. Salir")
         opcion = input("Ingrese el número de la opción deseada: ")
         if opcion == '1':
-            generacion_mapa(ruta_archivo, ruta_salida)
+            generacion_mapa(ruta_archivo, ruta_salida, detalles)
         elif opcion == '2':
             comparacion_cargas(ruta_archivo)
         elif opcion == '3':

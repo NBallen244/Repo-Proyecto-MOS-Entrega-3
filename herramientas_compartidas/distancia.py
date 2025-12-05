@@ -22,13 +22,17 @@ def haversine(lat1, lon1, lat2, lon2):
     distance = R * c
     return distance
 
-def osrm_distance(p1, p2) -> float:
+def osrm_distance(p1, p2, omitir) -> float:
         """Calculate distance using OSRM API."""
  
 
         url = f"http://router.project-osrm.org/route/v1/driving/{p1[0]},{p1[1]};{p2[0]},{p2[1]}?annotations=duration,distance"
 
         try:
+            if omitir:
+                distancia= haversine(p1[1], p1[0], p2[1], p2[0])
+                duracion=distancia/80*60  # assuming average speed of 80 km
+                return distancia, duracion
             response = requests.get(url)
             data = response.json()
 

@@ -22,7 +22,8 @@ def gen_csv_distancia_tiempo (nom_archivo, clientes, depositos):
             if i != j:
                 dist, time = osrm_distance(
                     (fila_i["Longitude"], fila_i["Latitude"]),
-                    (fila_j["Longitude"], fila_j["Latitude"])
+                    (fila_j["Longitude"], fila_j["Latitude"]),
+                    omitir=True
                 )
                 dict_archivo["FromID"].append(fila_i["StandardizedID"])
                 dict_archivo["ToID"].append(fila_j["StandardizedID"])
@@ -33,7 +34,8 @@ def gen_csv_distancia_tiempo (nom_archivo, clientes, depositos):
         for j, fila_j in clientes.iterrows():
             dist, time = osrm_distance(
                 (fila_i["Longitude"], fila_i["Latitude"]),
-                (fila_j["Longitude"], fila_j["Latitude"])
+                (fila_j["Longitude"], fila_j["Latitude"]),
+                omitir=True
             )
             dict_archivo["FromID"].append(fila_i["StandardizedID"])
             dict_archivo["ToID"].append(fila_j["StandardizedID"])
