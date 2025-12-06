@@ -223,12 +223,12 @@ if __name__ == "__main__":
             texto_ruta="-".join(ruta_final)
             resultados["VehicleId"].append(vehicleid)
             resultados["LoadCap"].append(vehiculos.loc[vehiculos['StandardizedID'] == vehicleid, 'Capacity'].values[0])
-            resultados["FuelCap"].append(vehiculos.loc[vehiculos['StandardizedID'] == vehicleid, 'Range'].values[0]/(parametros.loc[parametros['Parameter'] == 'fuel_efficiency_typical', 'Value'].values[0]))  # Asumiendo tanque lleno
+            resultados["FuelCap"].append(vehiculos.loc[vehiculos['StandardizedID'] == vehicleid, 'Range'].values[0]/(rendimiento_gasolina))  # Asumiendo tanque lleno
             resultados["RouteSequence"].append(texto_ruta)
             resultados["Municipalities"].append(municipios)
             resultados["DemandSatisfied"].append("-".join(demandas_satisfecha))
             resultados["InitialLoad"].append(demanda_total)  # Asumiendo carga inicial igual a demanda satisfecha
-            resultados["InitialFuel"].append(distancia_recorrida / (parametros.loc[parametros['Parameter'] == 'fuel_efficiency_typical', 'Value'].values[0]))  # Asumiendo tanque lleno
+            resultados["InitialFuel"].append(distancia_recorrida / (rendimiento_gasolina))  # Asumiendo tanque lleno
             resultados["Distance"].append(distancia_recorrida)
             resultados["Time"].append(tiempo_total) 
             total_cost = distancia_recorrida * costo_km
