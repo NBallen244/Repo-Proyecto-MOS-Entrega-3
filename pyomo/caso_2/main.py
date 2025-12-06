@@ -32,7 +32,7 @@ def construccion_modelo(clientes, depositos, parametros, vehiculos):
     #tiempos entre nodos
     tiempo_dict = {}
     #primero de los centros de distribucion a todos los clientes
-    matriz_distancia_tiempo = pd.read_csv("pyomo/caso_2/matriz.csv")
+    matriz_distancia_tiempo = pd.read_csv("herramientas_compartidas/matrices_distancia_tiempo/matriz_2.csv")
     print(matriz_distancia_tiempo.head())
     for i in model.D:
         for j in model.C:
@@ -98,10 +98,6 @@ def construccion_modelo(clientes, depositos, parametros, vehiculos):
     def cliente_atendido_rule(model, c):
         return sum(model.x[i,c,v] for i in model.N for v in model.V if i != c) == 1
     model.cliente_atendido = Constraint(model.C, rule=cliente_atendido_rule)
-    #Un vehiculo no puede recorrer mas distancia que su autonomia
-    def autonomia_vehiculo_rule(model, v):
-        return sum(model.dist[i,j] * model.x[i,j,v] for i in model.N for j in model.N if i != j) <= model.aut[v]
-    model.autonomia_vehiculo = Constraint(model.V, rule=autonomia_vehiculo_rule)
     #todo vehiculo debe partir de un deposito si es activado
     def salida_deposito_rule(model, v):
         return sum(model.x[d,j,v] for d in model.D for j in model.N if j != d) == model.z[v]
@@ -141,7 +137,7 @@ def construccion_modelo(clientes, depositos, parametros, vehiculos):
         return model.y[c,v] >= sum(model.x[i,c,v] for i in model.N if i != c)
     model.orden_cliente_visitado = Constraint(model.C, model.V, rule=orden_cliente_visitado_rule)
     
-    #Capacidad de los vehiculos no supera la demanda de atendidos
+    #La demanda total atendida por un vehiculo no puede exceder su capacidad
     def capacidad_vehiculo_rule(model, v):
         return sum(model.demand[c] * model.x[i,c,v] for c in model.C for i in model.N if i != c) <= model.cap[v]
     model.capacidad_vehiculo = Constraint(model.V, rule=capacidad_vehiculo_rule)

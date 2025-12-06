@@ -26,7 +26,6 @@ def generacion_mapa(ruta_archivo, ruta_salida, detalles):
     mapa = fo.Map(location=coordenadas_colombia, zoom_start=10)
     datos=pd.read_csv(ruta_archivo, sep=",", encoding="utf-8")
     clientes=detalles[0]
-    print(clientes)
     depositos=detalles[1]
     marker_cluster = MarkerCluster().add_to(mapa)
     for index, fila in datos.iterrows():
@@ -38,7 +37,6 @@ def generacion_mapa(ruta_archivo, ruta_salida, detalles):
             if "D" in nodo:
                 info_nodo=depositos.loc[depositos['StandardizedID'] == nodo].iloc[0]
             else:
-                print(nodo)
                 info_nodo=clientes.loc[clientes['StandardizedID'] == nodo].iloc[0]
             marker_color=color
             location=[info_nodo['Latitude'], info_nodo['Longitude']]
@@ -79,7 +77,7 @@ def comparacion_porcentual(ruta_archivo):
     plt.title('Distribución de Carga Entregada por Vehículo')
     plt.show()
 
-if __name__ == "__main__":
+def main():
     print("Seleccione el archivo de resultados a analizar:")
     print("1. Verificación Pyomo Caso Base")
     print("2. Verificación Pyomo Caso 2")
@@ -120,7 +118,8 @@ if __name__ == "__main__":
         print("1. Generar mapa de rutas")
         print("2. Comparar cargas entregadas vs capacidad del vehículo")
         print("3. Comparar distribución de cargas entregadas")
-        print("4. Salir")
+        print("4. Ver costo total minimizado")
+        print("5. Salir")
         opcion = input("Ingrese el número de la opción deseada: ")
         if opcion == '1':
             generacion_mapa(ruta_archivo, ruta_salida, detalles)
@@ -129,7 +128,19 @@ if __name__ == "__main__":
         elif opcion == '3':
             comparacion_porcentual(ruta_archivo)
         elif opcion == '4':
+            datos=pd.read_csv(ruta_archivo, sep=",", encoding="utf-8")
+            costo_total = datos['TotalCost'].sum()
+            print(f"Costo total minimizado: {costo_total}\n")
+        elif opcion == '5':
             print("Saliendo del programa.")
             break
         else:
             print("Opción no válida. Por favor, intente de nuevo.")
+
+if __name__ == "__main__":
+    while True:
+        main()
+        repetir = input("¿Desea realizar otro análisis? (s/n): ")
+        if repetir.lower() != 's':
+            print("Saliendo del programa.")
+            break
