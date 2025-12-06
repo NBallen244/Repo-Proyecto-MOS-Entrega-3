@@ -155,7 +155,7 @@ if __name__ == "__main__":
     model = construccion_modelo(clientes, depositos, parametros, vehiculos)
     # Crear el solucionador
     solver = SolverFactory('appsi_highs')  # Asegúrate de tener SCIP instalado
-    solver.options['time_limit'] = 180
+    solver.options['time_limit'] = 1800  # Establecer un límite de tiempo de 30 minutos
     
     # Resolver el modelo
     start_time = time.time()
