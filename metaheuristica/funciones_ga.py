@@ -1,12 +1,10 @@
-import numpy as np  
+
 from copy import deepcopy 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import networkx as nx
 import random
-import time
-def inicializar_poblacion(numero_individuos:int):
+def inicializar_poblacion(numero_individuos:int, clientes_ids:list, num_vehiculos:int):
     """
     Crear una población inicial de soluciones aleatorias.
     
@@ -17,7 +15,7 @@ def inicializar_poblacion(numero_individuos:int):
     
     for i in range(numero_individuos):
         # Create a random solution
-        solution = solucionAleatoria()
+        solution = solucionAleatoria(clientes_ids, num_vehiculos)
         population.append(solution)
     
     return population
@@ -190,12 +188,46 @@ def distancia_total_ruta(ruta:list, matriz_distancias_tiempos:pd.DataFrame, depo
     
     # Desde el último cliente de vuelta al depósito
     distancia_dept_vuelta = matriz_distancias_tiempos.loc[
-                (matriz_distancias_tiempos['FromID'] == ruta[-1]) & (matriz_distancias_tiempos['ToID'] == deposito_id),
+                (matriz_distancias_tiempos['ToID'] == ruta[-1]) & (matriz_distancias_tiempos['FromID'] == deposito_id),
                 'Distance_km'
             ].values[0]
     total_distance += distancia_dept_vuelta
     
     return total_distance
+
+def tiempo_total_ruta(ruta:list, matriz_distancias_tiempos:pd.DataFrame, deposito_id:str):
+    """
+    Calcula el tiempo total de una ruta, incluyendo el viaje de ida y vuelta al depósito.
+    """
+    if not ruta:
+        return 0
+    
+    total_time = 0
+    # Desde el depósito al primer cliente
+    tiempo_dept = matriz_distancias_tiempos.loc[
+                (matriz_distancias_tiempos['FromID'] == deposito_id) & (matriz_distancias_tiempos['ToID'] == ruta[0]),
+                'Time_min'
+            ].values[0]
+    total_time += tiempo_dept
+    
+    nodo_actual = ruta[0]
+    # Entre clientes en la ruta
+    for siguiente_nodo in ruta[1:]:
+        tiempo_entre = matriz_distancias_tiempos.loc[
+                (matriz_distancias_tiempos['FromID'] == nodo_actual) & (matriz_distancias_tiempos['ToID'] == siguiente_nodo),
+                'Time_min'
+            ].values[0]
+        total_time += tiempo_entre
+        nodo_actual = siguiente_nodo
+    
+    # Desde el último cliente de vuelta al depósito
+    tiempo_dept_vuelta = matriz_distancias_tiempos.loc[
+                (matriz_distancias_tiempos['ToID'] == ruta[-1]) & (matriz_distancias_tiempos['FromID'] == deposito_id),
+                'Time_min'
+            ].values[0]
+    total_time += tiempo_dept_vuelta
+    
+    return total_time
 
 def demanda_total_ruta(ruta:list, clientes:pd.DataFrame):
     """
@@ -243,7 +275,7 @@ def reparacion_por_capacidad(cromosoma, clientes:pd.DataFrame, vehiculos:pd.Data
                 break  # Salir del bucle para evitar un ciclo infinito
     return cromosoma
 
-def optimizar_ruta2opt(ruta:list, matriz_distancias_tiempos:pd.DataFrame, deposito_id:str, iteraciones:int=10):
+def optimizar_ruta2opt(ruta:list, matriz_distancias_tiempos:pd.DataFrame, deposito_id:str, iteraciones:int=5):
     """
     Optimiza una ruta usando el algoritmo de 2-opt para minimizar la distancia total.
     """
@@ -284,13 +316,13 @@ def reparar_solucion(cromosoma:list, clientes:pd.DataFrame, matriz_distancias_ti
     missing_cities = [cliente for cliente in clientes_ids if cliente not in ciudades_visitadas]
     # Agregar clientes faltantes a rutas aleatorias (todas las demandas deben ser cumplidas)
     random.shuffle(missing_cities)
-    for city in missing_cities:
+    for client in missing_cities:
         # Escojemos ruta de menor tamaño (asumiendo que tiene mas capacidad)
         route_sizes = [(i, len(route)) for i, route in enumerate(cromosoma)]
         route_idx = min(route_sizes, key=lambda x: x[1])[0]
         # Insertamos en una posicion al azar
         insert_pos = random.randint(0, len(cromosoma[route_idx]))
-        cromosoma[route_idx].insert(insert_pos, city)
+        cromosoma[route_idx].insert(insert_pos, client)
     #Reparamos para cumplir la restriccion de capacidad
     cromosoma = reparacion_por_capacidad(cromosoma, clientes, vehiculos)
     #Optimizamos cada ruta con 2-opt
@@ -419,8 +451,8 @@ def _redistribution_mutation(solution):
 def plot_convergence(historial_fitness:list, mejor_historial_soluciones:list):
     """Plot the convergence of the genetic algorithm."""
     plt.figure(figsize=(10, 6))
-    plt.plot(historial_fitness, label='Current Generation Best')
-    plt.plot(mejor_historial_soluciones, label='All-Time Best')
+    plt.plot(historial_fitness, label='Fitness Promedio')
+    plt.plot(mejor_historial_soluciones, label='Mejor Fitness Generación')
     plt.xlabel('Generation')
     plt.ylabel('Fitness (Total Cost)')
     plt.title('Genetic Algorithm Convergence')
