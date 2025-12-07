@@ -19,7 +19,7 @@ El siguiente documento detalla la composición de la solución del proyecto etap
 │   │       └───matriz_2.csv
 │   │       └───matriz_3.csv
 │   ├───distancia.py (script con funciones de calculo de distancia para la generacion de la matrices)
-│   └───visuales_resultados.py (script interactivo que permite generar visuales a partir de los archivos de verificacion de cada caso/metodo, como distribucion de cargas entre vehiculos, mapa de rutas, y solucion alcanzada.)
+│   └───visuales_resultados.py (script interactivo que permite generar visuales a partir de los archivos de verificacion de cada caso/metodo)
 ├───metaheuristica (resguarda las verificaciones y soluciones alternativas mediante algoritmos genéticos, así como la lógica replicable para cada caso)
 │   ├───caso_2
 │   ├───caso_3
@@ -37,8 +37,8 @@ El siguiente documento detalla la composición de la solución del proyecto etap
     ├───caso_2
     ├───caso_3
     ├───caso_base
-    │   ├───main.py (script interactivo principal que resguarda el algoritmo de solución mediante GA y la generación del archivo de verificación. Define su propio fitness y avance generacional por elitismo, reciclando las funciones GA compartidas. Se definen parametros por defecto (generaciones, probabilidad de mutacion, tamaño poblacion, etc), pero tambien la opción de parámetros personalizados para calibración). Adicionalmente despliega la convergencia resultante del fitness, tanto promedio como el mejor por cada generación.
-    │   ├───verificacion_metaheuristica_GA_caso_base.csv
-    │   └───mapa_rutas.html (generado a partir de la herramienta compartidad de visuales)
-    └───funciones_ga.py (este script resguarda todas las funciones/operadores generalizables a todos los algoritmos geneticos de cada caso (mutacion, cruce, poblamiento inicial, reparacion, etc.) dado el contexto del proyecto. Lo único no incluido viene siendo la función de fitness (funcion objetivo) y el avance generacional por elitismo, definido en cada caso en función de su propio fitness)
+    │   ├───main.py (script interactivo para la ejución de la solucion GA con los operadores compartidos con los parámetros ingresados. Adicionalmente genera el archivo de verificacion y despliega la convergencia de los fitnesses por generación.)
+    │   ├───verificacion_metaheuristica_GA_caso_base.csv (archivo de verificación del caso)
+    │   └───mapa_rutas.html (mapeo de rutas generado a partir de la herramienta compartidad de visuales con folium)
+    └───funciones_ga.py (script de funciones/operadores GA generalizables a cada caso bajo nuestro contexto de proyecto)
 ```
