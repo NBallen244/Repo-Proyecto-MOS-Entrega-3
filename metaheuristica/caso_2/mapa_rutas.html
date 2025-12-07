@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f1d357eec67afb16b8bf62ad25a18f0c {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_f1d357eec67afb16b8bf62ad25a18f0c" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f1d357eec67afb16b8bf62ad25a18f0c = L.map(
+                "map_f1d357eec67afb16b8bf62ad25a18f0c",
+                {
+                    center: [4.5709, -74.2973],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_77bd85e35eb18a6ae76d1a79a73f810f = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_77bd85e35eb18a6ae76d1a79a73f810f.addTo(map_f1d357eec67afb16b8bf62ad25a18f0c);
+        
+    
+            var marker_cluster_2ef45c30980cd535d38e4d17be941a82 = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var marker_314ab6d31e80a8a10dd3a8b6326d752d = L.marker(
+                [4.75021190869025, -74.08124218159384],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_819e4f3fc4099c5c8880e0e648f9cd2a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_33a5733af4cc89a22e710797798988f7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4a03285b9719752466b5a5b39308a992 = $(`<div id="html_4a03285b9719752466b5a5b39308a992" style="width: 100.0%; height: 100.0%;">CD01 en ruta del vehiculo V001 orden 0</div>`)[0];
+                popup_33a5733af4cc89a22e710797798988f7.setContent(html_4a03285b9719752466b5a5b39308a992);
+            
+        
+
+        marker_314ab6d31e80a8a10dd3a8b6326d752d.bindPopup(popup_33a5733af4cc89a22e710797798988f7)
+        ;
+
+        
+    
+    
+                marker_314ab6d31e80a8a10dd3a8b6326d752d.setIcon(icon_819e4f3fc4099c5c8880e0e648f9cd2a);
+            
+    
+            var marker_402c0ba0397f34ea5061882379ce3842 = L.marker(
+                [4.732421040989568, -74.10178731827096],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_704b08f5be730b2516c967d3b1958b9b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ea360b0b539e1084f983018f980322e5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fb5670d8a0d5d51d1f52cf5357a166ca = $(`<div id="html_fb5670d8a0d5d51d1f52cf5357a166ca" style="width: 100.0%; height: 100.0%;">C003 en ruta del vehiculo V001 orden 1</div>`)[0];
+                popup_ea360b0b539e1084f983018f980322e5.setContent(html_fb5670d8a0d5d51d1f52cf5357a166ca);
+            
+        
+
+        marker_402c0ba0397f34ea5061882379ce3842.bindPopup(popup_ea360b0b539e1084f983018f980322e5)
+        ;
+
+        
+    
+    
+                marker_402c0ba0397f34ea5061882379ce3842.setIcon(icon_704b08f5be730b2516c967d3b1958b9b);
+            
+    
+            var marker_839f872df66bedb334be0cb6c3a1be51 = L.marker(
+                [4.727691608175209, -74.11027242131048],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_9714a637ce64cd7b952427bec24b8d95 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_322b3d53727b9e255c871220ae15d1a4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_320fed8017f3612b37e7d3588a3048a6 = $(`<div id="html_320fed8017f3612b37e7d3588a3048a6" style="width: 100.0%; height: 100.0%;">C005 en ruta del vehiculo V001 orden 2</div>`)[0];
+                popup_322b3d53727b9e255c871220ae15d1a4.setContent(html_320fed8017f3612b37e7d3588a3048a6);
+            
+        
+
+        marker_839f872df66bedb334be0cb6c3a1be51.bindPopup(popup_322b3d53727b9e255c871220ae15d1a4)
+        ;
+
+        
+    
+    
+                marker_839f872df66bedb334be0cb6c3a1be51.setIcon(icon_9714a637ce64cd7b952427bec24b8d95);
+            
+    
+            var marker_c0b95ff63ab7312b549225208217c415 = L.marker(
+                [4.665002925306577, -74.15228946899238],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_6e10fc0f716d4313e2a7b4f3015c810f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_88bc09739c980301cdd593342ab340a4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_aeb27a6adc358e7020e56bccabafb268 = $(`<div id="html_aeb27a6adc358e7020e56bccabafb268" style="width: 100.0%; height: 100.0%;">C006 en ruta del vehiculo V001 orden 3</div>`)[0];
+                popup_88bc09739c980301cdd593342ab340a4.setContent(html_aeb27a6adc358e7020e56bccabafb268);
+            
+        
+
+        marker_c0b95ff63ab7312b549225208217c415.bindPopup(popup_88bc09739c980301cdd593342ab340a4)
+        ;
+
+        
+    
+    
+                marker_c0b95ff63ab7312b549225208217c415.setIcon(icon_6e10fc0f716d4313e2a7b4f3015c810f);
+            
+    
+            var marker_698fb92b8b798c0386b5043d93288cb6 = L.marker(
+                [4.638612189685843, -74.19486224157397],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_97a784828be09e39f166bf9e290080c6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f2010cea45deb4e45dd559a2ad08e0bb = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e39c7db9eb1cb4304d25e209c7ca0fff = $(`<div id="html_e39c7db9eb1cb4304d25e209c7ca0fff" style="width: 100.0%; height: 100.0%;">C004 en ruta del vehiculo V001 orden 4</div>`)[0];
+                popup_f2010cea45deb4e45dd559a2ad08e0bb.setContent(html_e39c7db9eb1cb4304d25e209c7ca0fff);
+            
+        
+
+        marker_698fb92b8b798c0386b5043d93288cb6.bindPopup(popup_f2010cea45deb4e45dd559a2ad08e0bb)
+        ;
+
+        
+    
+    
+                marker_698fb92b8b798c0386b5043d93288cb6.setIcon(icon_97a784828be09e39f166bf9e290080c6);
+            
+    
+            var marker_cf67e3d90f113236eee20351110fc24f = L.marker(
+                [4.632552840424734, -74.19699184741948],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_c5da5607ae1c00504fbfcedded0061f6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a2593f5858cd86b3d8ffe2db213a6025 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bd71a187bab6c860cff96f323170b03c = $(`<div id="html_bd71a187bab6c860cff96f323170b03c" style="width: 100.0%; height: 100.0%;">C001 en ruta del vehiculo V001 orden 5</div>`)[0];
+                popup_a2593f5858cd86b3d8ffe2db213a6025.setContent(html_bd71a187bab6c860cff96f323170b03c);
+            
+        
+
+        marker_cf67e3d90f113236eee20351110fc24f.bindPopup(popup_a2593f5858cd86b3d8ffe2db213a6025)
+        ;
+
+        
+    
+    
+                marker_cf67e3d90f113236eee20351110fc24f.setIcon(icon_c5da5607ae1c00504fbfcedded0061f6);
+            
+    
+            var marker_209f7659d6ca6a56f17ac6c0c0ed658e = L.marker(
+                [4.601328214582278, -74.15503659129905],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_c0855b891791aaee5642535a60289a76 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ccf261b7482aa50b1e10dc7c4ae6554c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a8277d8e4ee26c02e01ca8337a7fef00 = $(`<div id="html_a8277d8e4ee26c02e01ca8337a7fef00" style="width: 100.0%; height: 100.0%;">C002 en ruta del vehiculo V001 orden 6</div>`)[0];
+                popup_ccf261b7482aa50b1e10dc7c4ae6554c.setContent(html_a8277d8e4ee26c02e01ca8337a7fef00);
+            
+        
+
+        marker_209f7659d6ca6a56f17ac6c0c0ed658e.bindPopup(popup_ccf261b7482aa50b1e10dc7c4ae6554c)
+        ;
+
+        
+    
+    
+                marker_209f7659d6ca6a56f17ac6c0c0ed658e.setIcon(icon_c0855b891791aaee5642535a60289a76);
+            
+    
+            var marker_c07a2ac9d7ba026f54e771c156d14e46 = L.marker(
+                [4.636074548012315, -74.09804168568287],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_3407cf7e691b9a5cc8de199adb515fa7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1636037734d79b5281b6ec58f4bfac4d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_655a24b15245e97b66e730bfbd8645c7 = $(`<div id="html_655a24b15245e97b66e730bfbd8645c7" style="width: 100.0%; height: 100.0%;">C009 en ruta del vehiculo V001 orden 7</div>`)[0];
+                popup_1636037734d79b5281b6ec58f4bfac4d.setContent(html_655a24b15245e97b66e730bfbd8645c7);
+            
+        
+
+        marker_c07a2ac9d7ba026f54e771c156d14e46.bindPopup(popup_1636037734d79b5281b6ec58f4bfac4d)
+        ;
+
+        
+    
+    
+                marker_c07a2ac9d7ba026f54e771c156d14e46.setIcon(icon_3407cf7e691b9a5cc8de199adb515fa7);
+            
+    
+            var marker_4df3f226d238073cfe4450da0e1a0881 = L.marker(
+                [4.6771016997028205, -74.03241075805882],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_010bfc9e31b17654602f25a2aba3741e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_940f1d6ef8e36dd53c997625896792ed = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f431a151a56ec139daee8f238fee020f = $(`<div id="html_f431a151a56ec139daee8f238fee020f" style="width: 100.0%; height: 100.0%;">C007 en ruta del vehiculo V001 orden 8</div>`)[0];
+                popup_940f1d6ef8e36dd53c997625896792ed.setContent(html_f431a151a56ec139daee8f238fee020f);
+            
+        
+
+        marker_4df3f226d238073cfe4450da0e1a0881.bindPopup(popup_940f1d6ef8e36dd53c997625896792ed)
+        ;
+
+        
+    
+    
+                marker_4df3f226d238073cfe4450da0e1a0881.setIcon(icon_010bfc9e31b17654602f25a2aba3741e);
+            
+    
+            var marker_4f24c1d7b9b65f72bd5102829cdb9981 = L.marker(
+                [4.707007012114083, -74.0624758742746],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_e595e5d219a464eac36c582e7d5a73d4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e0af7801927e319cf699ff4bd3def6dd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fb46d6f7d6da518340a1603098fb1815 = $(`<div id="html_fb46d6f7d6da518340a1603098fb1815" style="width: 100.0%; height: 100.0%;">C008 en ruta del vehiculo V001 orden 9</div>`)[0];
+                popup_e0af7801927e319cf699ff4bd3def6dd.setContent(html_fb46d6f7d6da518340a1603098fb1815);
+            
+        
+
+        marker_4f24c1d7b9b65f72bd5102829cdb9981.bindPopup(popup_e0af7801927e319cf699ff4bd3def6dd)
+        ;
+
+        
+    
+    
+                marker_4f24c1d7b9b65f72bd5102829cdb9981.setIcon(icon_e595e5d219a464eac36c582e7d5a73d4);
+            
+    
+            var marker_4472bd45728d619b47ad68b3765e06cb = L.marker(
+                [4.75021190869025, -74.08124218159384],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_c0b393b623ad69686c618f57dc1cb5e0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_902fc7d92b3975ff9efe5e8369a1e4b8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3336489502eebcfc8195d23b441dfa4c = $(`<div id="html_3336489502eebcfc8195d23b441dfa4c" style="width: 100.0%; height: 100.0%;">CD01 en ruta del vehiculo V001 orden 10</div>`)[0];
+                popup_902fc7d92b3975ff9efe5e8369a1e4b8.setContent(html_3336489502eebcfc8195d23b441dfa4c);
+            
+        
+
+        marker_4472bd45728d619b47ad68b3765e06cb.bindPopup(popup_902fc7d92b3975ff9efe5e8369a1e4b8)
+        ;
+
+        
+    
+    
+                marker_4472bd45728d619b47ad68b3765e06cb.setIcon(icon_c0b393b623ad69686c618f57dc1cb5e0);
+            
+    
+            var marker_fe5c30a8b55be7ac884a7d55ea4ef9ec = L.marker(
+                [4.75021190869025, -74.08124218159384],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_48c38a8d5e53e8f2071f978919ff972a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f58646bf246f464ac4a0b3d225c30e4e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4cfe0184fe5543e4d4cee58d95fa771a = $(`<div id="html_4cfe0184fe5543e4d4cee58d95fa771a" style="width: 100.0%; height: 100.0%;">CD01 en ruta del vehiculo V002 orden 0</div>`)[0];
+                popup_f58646bf246f464ac4a0b3d225c30e4e.setContent(html_4cfe0184fe5543e4d4cee58d95fa771a);
+            
+        
+
+        marker_fe5c30a8b55be7ac884a7d55ea4ef9ec.bindPopup(popup_f58646bf246f464ac4a0b3d225c30e4e)
+        ;
+
+        
+    
+    
+                marker_fe5c30a8b55be7ac884a7d55ea4ef9ec.setIcon(icon_48c38a8d5e53e8f2071f978919ff972a);
+            
+    
+            var marker_78be74865204c22a66decb5861f5b6f3 = L.marker(
+                [4.75021190869025, -74.08124218159384],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_83616130e250986f0468e84d4f2ae69c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_aa83aa4593cdd754e5bfcafe10ad91d3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9ef664b371b6868f933031cfd32f80ff = $(`<div id="html_9ef664b371b6868f933031cfd32f80ff" style="width: 100.0%; height: 100.0%;">CD01 en ruta del vehiculo V002 orden 1</div>`)[0];
+                popup_aa83aa4593cdd754e5bfcafe10ad91d3.setContent(html_9ef664b371b6868f933031cfd32f80ff);
+            
+        
+
+        marker_78be74865204c22a66decb5861f5b6f3.bindPopup(popup_aa83aa4593cdd754e5bfcafe10ad91d3)
+        ;
+
+        
+    
+    
+                marker_78be74865204c22a66decb5861f5b6f3.setIcon(icon_83616130e250986f0468e84d4f2ae69c);
+            
+    
+            var marker_fb8d3c11e7cef96525efea28d583a437 = L.marker(
+                [4.75021190869025, -74.08124218159384],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_f83f42f001838fe6973d0434cc1d8689 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_298b8122a1a6df2250bde2747e39eef6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_afe1492e5e5c239f01579a3aa68e00df = $(`<div id="html_afe1492e5e5c239f01579a3aa68e00df" style="width: 100.0%; height: 100.0%;">CD01 en ruta del vehiculo V003 orden 0</div>`)[0];
+                popup_298b8122a1a6df2250bde2747e39eef6.setContent(html_afe1492e5e5c239f01579a3aa68e00df);
+            
+        
+
+        marker_fb8d3c11e7cef96525efea28d583a437.bindPopup(popup_298b8122a1a6df2250bde2747e39eef6)
+        ;
+
+        
+    
+    
+                marker_fb8d3c11e7cef96525efea28d583a437.setIcon(icon_f83f42f001838fe6973d0434cc1d8689);
+            
+    
+            var marker_fbec74f27e91e0bbf5d6545c8cf7e00c = L.marker(
+                [4.75021190869025, -74.08124218159384],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_230fa496af875d713ba08c1cf6dd50f7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ded2c743ce8abd37410fe3e1cfa0a8e2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e73ac5a4b23e52d7d7769fd33cc58ebd = $(`<div id="html_e73ac5a4b23e52d7d7769fd33cc58ebd" style="width: 100.0%; height: 100.0%;">CD01 en ruta del vehiculo V003 orden 1</div>`)[0];
+                popup_ded2c743ce8abd37410fe3e1cfa0a8e2.setContent(html_e73ac5a4b23e52d7d7769fd33cc58ebd);
+            
+        
+
+        marker_fbec74f27e91e0bbf5d6545c8cf7e00c.bindPopup(popup_ded2c743ce8abd37410fe3e1cfa0a8e2)
+        ;
+
+        
+    
+    
+                marker_fbec74f27e91e0bbf5d6545c8cf7e00c.setIcon(icon_230fa496af875d713ba08c1cf6dd50f7);
+            
+    
+            var marker_323c86a196e30897d6d6f4169a118a5c = L.marker(
+                [4.75021190869025, -74.08124218159384],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_e612a6405df024c6fb020dde9fd62423 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9d5c5fd47dee72f5b2b185fa6fef02e5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_871ff98d9e1dad603f2ebefeb8e5f908 = $(`<div id="html_871ff98d9e1dad603f2ebefeb8e5f908" style="width: 100.0%; height: 100.0%;">CD01 en ruta del vehiculo V004 orden 0</div>`)[0];
+                popup_9d5c5fd47dee72f5b2b185fa6fef02e5.setContent(html_871ff98d9e1dad603f2ebefeb8e5f908);
+            
+        
+
+        marker_323c86a196e30897d6d6f4169a118a5c.bindPopup(popup_9d5c5fd47dee72f5b2b185fa6fef02e5)
+        ;
+
+        
+    
+    
+                marker_323c86a196e30897d6d6f4169a118a5c.setIcon(icon_e612a6405df024c6fb020dde9fd62423);
+            
+    
+            var marker_c4755f14c997f92b31f0543d1734536b = L.marker(
+                [4.75021190869025, -74.08124218159384],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_42da5199f27f50e12b79e0c0519947c8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_658df7c1fa9cbfc4764e406d7d042361 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2e09e5114a63673d22f73eadfad861a2 = $(`<div id="html_2e09e5114a63673d22f73eadfad861a2" style="width: 100.0%; height: 100.0%;">CD01 en ruta del vehiculo V004 orden 1</div>`)[0];
+                popup_658df7c1fa9cbfc4764e406d7d042361.setContent(html_2e09e5114a63673d22f73eadfad861a2);
+            
+        
+
+        marker_c4755f14c997f92b31f0543d1734536b.bindPopup(popup_658df7c1fa9cbfc4764e406d7d042361)
+        ;
+
+        
+    
+    
+                marker_c4755f14c997f92b31f0543d1734536b.setIcon(icon_42da5199f27f50e12b79e0c0519947c8);
+            
+    
+            var marker_0328d8275f38891f6076606295c6704c = L.marker(
+                [4.75021190869025, -74.08124218159384],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_43fc4f67fa4ad8f6e757240295ce630f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b372591b3629905f801b62763cf7976d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a3ec4746918f82fc64300b8a364689d0 = $(`<div id="html_a3ec4746918f82fc64300b8a364689d0" style="width: 100.0%; height: 100.0%;">CD01 en ruta del vehiculo V005 orden 0</div>`)[0];
+                popup_b372591b3629905f801b62763cf7976d.setContent(html_a3ec4746918f82fc64300b8a364689d0);
+            
+        
+
+        marker_0328d8275f38891f6076606295c6704c.bindPopup(popup_b372591b3629905f801b62763cf7976d)
+        ;
+
+        
+    
+    
+                marker_0328d8275f38891f6076606295c6704c.setIcon(icon_43fc4f67fa4ad8f6e757240295ce630f);
+            
+    
+            var marker_fb14b273d73287416269846bb24a5b53 = L.marker(
+                [4.75021190869025, -74.08124218159384],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_e6dcf72f6ac34f03b876a10645a8136d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fd755da917f97a7d930b3d87bf2e12ff = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a2e27a74d75709aff9c036cab2579665 = $(`<div id="html_a2e27a74d75709aff9c036cab2579665" style="width: 100.0%; height: 100.0%;">CD01 en ruta del vehiculo V005 orden 1</div>`)[0];
+                popup_fd755da917f97a7d930b3d87bf2e12ff.setContent(html_a2e27a74d75709aff9c036cab2579665);
+            
+        
+
+        marker_fb14b273d73287416269846bb24a5b53.bindPopup(popup_fd755da917f97a7d930b3d87bf2e12ff)
+        ;
+
+        
+    
+    
+                marker_fb14b273d73287416269846bb24a5b53.setIcon(icon_e6dcf72f6ac34f03b876a10645a8136d);
+            
+    
+            var marker_8a3cb88ae60b749d36d369eca3e4f256 = L.marker(
+                [4.75021190869025, -74.08124218159384],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_4a4750381c61f69ad48bc61cca3c0bd5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightred",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2b3369e7aab537194a637ca01941f52c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e4d7347d54b6bfc2ac79d9bcc399f8ea = $(`<div id="html_e4d7347d54b6bfc2ac79d9bcc399f8ea" style="width: 100.0%; height: 100.0%;">CD01 en ruta del vehiculo V006 orden 0</div>`)[0];
+                popup_2b3369e7aab537194a637ca01941f52c.setContent(html_e4d7347d54b6bfc2ac79d9bcc399f8ea);
+            
+        
+
+        marker_8a3cb88ae60b749d36d369eca3e4f256.bindPopup(popup_2b3369e7aab537194a637ca01941f52c)
+        ;
+
+        
+    
+    
+                marker_8a3cb88ae60b749d36d369eca3e4f256.setIcon(icon_4a4750381c61f69ad48bc61cca3c0bd5);
+            
+    
+            var marker_18267bd86e3fae7491964b7649a80c41 = L.marker(
+                [4.75021190869025, -74.08124218159384],
+                {
+}
+            ).addTo(marker_cluster_2ef45c30980cd535d38e4d17be941a82);
+        
+    
+            var icon_36494292b986ac91fcabaab798d4d02c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightred",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9fb105393a648466f89566aaf9a2e921 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7019b8808dc669dfbde35008b0a60b78 = $(`<div id="html_7019b8808dc669dfbde35008b0a60b78" style="width: 100.0%; height: 100.0%;">CD01 en ruta del vehiculo V006 orden 1</div>`)[0];
+                popup_9fb105393a648466f89566aaf9a2e921.setContent(html_7019b8808dc669dfbde35008b0a60b78);
+            
+        
+
+        marker_18267bd86e3fae7491964b7649a80c41.bindPopup(popup_9fb105393a648466f89566aaf9a2e921)
+        ;
+
+        
+    
+    
+                marker_18267bd86e3fae7491964b7649a80c41.setIcon(icon_36494292b986ac91fcabaab798d4d02c);
+            
+    
+            marker_cluster_2ef45c30980cd535d38e4d17be941a82.addTo(map_f1d357eec67afb16b8bf62ad25a18f0c);
+        
+    
+            var poly_line_64ccd4fb3cb4a222c6ab2f329eb0e6c5 = L.polyline(
+                [[4.75021190869025, -74.08124218159384], [4.732421040989568, -74.10178731827096], [4.727691608175209, -74.11027242131048], [4.665002925306577, -74.15228946899238], [4.638612189685843, -74.19486224157397], [4.632552840424734, -74.19699184741948], [4.601328214582278, -74.15503659129905], [4.636074548012315, -74.09804168568287], [4.6771016997028205, -74.03241075805882], [4.707007012114083, -74.0624758742746], [4.75021190869025, -74.08124218159384]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_f1d357eec67afb16b8bf62ad25a18f0c);
+        
+    
+            var poly_line_45126ee982b19d727680f444487370f1 = L.polyline(
+                [[4.75021190869025, -74.08124218159384], [4.75021190869025, -74.08124218159384]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_f1d357eec67afb16b8bf62ad25a18f0c);
+        
+    
+            var poly_line_6d9c1d7edb73183da995542f2d07ceed = L.polyline(
+                [[4.75021190869025, -74.08124218159384], [4.75021190869025, -74.08124218159384]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_f1d357eec67afb16b8bf62ad25a18f0c);
+        
+    
+            var poly_line_3f37e2a7c2a60c82fbc41f877a46d193 = L.polyline(
+                [[4.75021190869025, -74.08124218159384], [4.75021190869025, -74.08124218159384]],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_f1d357eec67afb16b8bf62ad25a18f0c);
+        
+    
+            var poly_line_33ddff5623585f2e339ac4aeb29fa600 = L.polyline(
+                [[4.75021190869025, -74.08124218159384], [4.75021190869025, -74.08124218159384]],
+                {"bubblingMouseEvents": true, "color": "darkred", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "darkred", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_f1d357eec67afb16b8bf62ad25a18f0c);
+        
+    
+            var poly_line_9c2351bb19303076a4fda131ee000ce8 = L.polyline(
+                [[4.75021190869025, -74.08124218159384], [4.75021190869025, -74.08124218159384]],
+                {"bubblingMouseEvents": true, "color": "lightred", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "lightred", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_f1d357eec67afb16b8bf62ad25a18f0c);
+        
+</script>
+</html>
