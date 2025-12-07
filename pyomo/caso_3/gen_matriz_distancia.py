@@ -46,6 +46,6 @@ def gen_csv_distancia_tiempo (nom_archivo, clientes, depositos):
     print(f"Archivo {nom_archivo} generado exitosamente.")
 
 if __name__ == "__main__":
-    ruta_archivo="pyomo/caso_3/matriz.csv"
+    ruta_archivo="herramientas_compartidas/matrices_distancia_tiempo/matriz_3.csv"
     clientes, depositos = cargar_datos_caso3()[0:2]
     gen_csv_distancia_tiempo(ruta_archivo, clientes, depositos)

@@ -45,6 +45,6 @@ def gen_csv_distancia_tiempo (nom_archivo, clientes, depositos):
     df_distancias.to_csv(nom_archivo, index=False)
 
 if __name__ == "__main__":
-    ruta_archivo="pyomo/caso_2/matriz.csv"
+    ruta_archivo="herramientas_compartidas/matrices_distancia_tiempo/matriz_2.csv"
     clientes, depositos = cargar_datos_caso2()[0:2]
     gen_csv_distancia_tiempo(ruta_archivo, clientes, depositos)
