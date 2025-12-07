@@ -37,7 +37,7 @@ El siguiente documento detalla la composición de la solución del proyecto etap
     ├───caso_2
     ├───caso_3
     ├───caso_base
-    │   ├───main.py (script interactivo para la ejución de la solucion GA con los operadores compartidos con los parámetros ingresados. Adicionalmente genera el archivo de verificacion y despliega la convergencia de los fitnesses por generación.)
+    │   ├───main.py (script interactivo para la ejución de la solucion GA con los operadores compartidos con los parámetros ingresados. Adicionalmente genera el archivo de verificacion y despliega la convergencia del fitness (mean/max))
     │   ├───verificacion_metaheuristica_GA_caso_base.csv (archivo de verificación del caso)
     │   └───mapa_rutas.html (mapeo de rutas generado a partir de la herramienta compartidad de visuales con folium)
     └───funciones_ga.py (script de funciones/operadores GA generalizables a cada caso bajo nuestro contexto de proyecto)
