@@ -41,3 +41,4 @@ El siguiente documento detalla la composición de la solución del proyecto etap
     │   ├───verificacion_metaheuristica_GA_caso_base.csv
     │   └───mapa_rutas.html (generado a partir de la herramienta compartidad de visuales)
     └───funciones_ga.py (este script resguarda todas las funciones/operadores generalizables a todos los algoritmos geneticos de cada caso (mutacion, cruce, poblamiento inicial, reparacion, etc.) dado el contexto del proyecto. Lo único no incluido viene siendo la función de fitness (funcion objetivo) y el avance generacional por elitismo, definido en cada caso en función de su propio fitness)
+```
