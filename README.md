@@ -31,7 +31,7 @@ El siguiente documento detalla la composición de la solución del proyecto etap
     └───caso_base
 ```
 
-* Estructura Interna Por caso Heuristico (Ejemplo Caso Base):
+* Estructura Interna Por caso Metaheuristico (Ejemplo Caso Base):
 ```bash
 ├───metaheuristica
     ├───caso_2
