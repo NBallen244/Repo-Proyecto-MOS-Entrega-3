@@ -1,6 +1,6 @@
-#Estructura de Solucion/Repo Proyecto Etapa 3
+# Estructura de Solucion/Repo Proyecto Etapa 3
 
-El siguiente documento detalla la composición de la solución del proyecto etapa 3 mediante algoritmos genéticos, así como su combinación y comparación con soluciones previamente desarrolladas con modelos matemáticos implementados en la librería y solvers de Pyomo. A continuacion resumimos la estructura del repositorio, y la funcion de cada sección para el desarrollo de la solución:
+El siguiente documento detalla la composición de la solución del proyecto etapa 3 mediante algoritmos genéticos, así como su combinación y comparación con soluciones previamente desarrolladas con modelos matemáticos implementados en la librería y solvers de Pyomo. A continuacion resumimos la estructura del repositorio, la funcion de cada sección para el desarrollo de la solución, y cómo hace uso de las mismas (para las soluciones metaheuristicas):
 
 * Estructura de Solucion Global:
 ```bash
